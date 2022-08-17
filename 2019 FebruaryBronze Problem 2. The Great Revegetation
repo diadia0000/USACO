@@ -1,0 +1,50 @@
+def read_file(input_file,nc):
+    farm = []
+    for i in range(nc):
+        f,g = map(int,input_file.readline().split())
+        farm.append([f,g])
+    return farm
+
+
+def favorite(f,p):
+    cow = []
+    for i in range(len(f)):
+        if f[i][0] == p or f[i][1] == p:
+            cow.append(i)
+    return cow
+
+def used(like,cows,typ):
+    use = []
+    for c in cows:
+        p_a = like[c][0] ; p_b = like[c][1]
+        if p_a<len(typ):
+            use.append(typ[p_a])
+        if p_b<len(typ):
+            use.append(typ[p_b])
+    return use
+def able(used):
+    grass = 1
+    while grass in used:
+        grass +=1
+    return grass
+def writes(out,type):
+    p = []
+    for i in type:
+        p.append(str(i))
+    output = ''.join(p)
+    out.write(output + '\n')
+
+p_type = [0]
+input_file = open('revegetate.in','r')
+ouput_file = open('revegetate.out','w')
+np,nc = map(int,input_file.readline().split())
+like = read_file(input_file,nc)
+for i in range(1,np+1):
+    cows = favorite(like,i)
+    delt = used(like,cows,p_type)
+    take = able(delt)
+    p_type.append(take)
+p_type.pop(0)
+writes(ouput_file,p_type)
+input_file.close()
+ouput_file.close()
